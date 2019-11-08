@@ -54,6 +54,7 @@ create table Radios(
     banda varchar(2),
     localidad integer,
     imagen varchar(400),
+    fecha_agregado datetime default current_timestamp,
     foreign key (localidad) references Ubicaciones(id),
     foreign key (medio) references Medios(id)
 );
@@ -98,27 +99,12 @@ create table Listas(
     nombre varchar(20) not null,
     nick varchar(10) not null,
     descripcion varchar(100),
+    fecha_agregado datetime default current_timestamp,
+    contenido integer,
+    foreign key (contenido) references Contenido(id),
     UNIQUE KEY (nombre, nick)
 );
 
-create table ProgramasFavoritos(
-	nick varchar(10),
-    programa integer,
-    lista integer,
-    UNIQUE KEY (lista, programa),
-    foreign key (lista) references Listas(id),
-    foreign key (nick) references Usuarios(nick),
-    foreign key (programa) references Radios(id)
-);
-
-create table RadiosFavoritas(
-	nick varchar(10),
-    radio integer,
-    lista integer,
-    UNIQUE KEY (lista, radio),
-    foreign key (lista) references Listas(id),
-    foreign key (nick) references Usuarios(nick),
-    foreign key (radio) references Radios(id)
-);
+-- create Listas -> Favoritos, historial por defecto en store procedure al crear usuario
 
 select * from Radios;
